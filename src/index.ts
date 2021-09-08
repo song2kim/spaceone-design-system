@@ -1,4 +1,4 @@
-import { PluginObject, VueConstructor } from 'vue';
+import { PluginObject, VueConstructor, createApp } from 'vue';
 import VueI18n from 'vue-i18n';
 import velocity from 'velocity-animate';
 import SvgIcon from 'vue-svgicon';
@@ -15,6 +15,7 @@ interface SpaceoneDSOptions {
     installFragment?: boolean;
 }
 
+const app = createApp({});
 
 const SpaceoneDS: PluginObject<SpaceoneDSOptions> = {
     install(_Vue: VueConstructor, options) {

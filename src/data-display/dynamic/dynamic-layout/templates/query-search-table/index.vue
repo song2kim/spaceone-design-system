@@ -40,9 +40,6 @@
                                  :data="getValueByPath(rootData[index], field.name)"
                                  :handler="fieldHandler"
                 />
-                <span v-else :key="slotName">
-                    test
-                </span>
             </template>
 
             <template v-for="({text, description}, headerSlot) of dynamicFieldHeaderSlots" v-slot:[headerSlot]>
@@ -66,11 +63,11 @@ import {
     ComponentRenderProxy,
     computed, getCurrentInstance, reactive, toRefs,
 } from '@vue/composition-api';
+import { get } from 'lodash';
 import PPanelTop from '@/data-display/titles/panel-top/PPanelTop.vue';
 import PDynamicField from '@/data-display/dynamic/dynamic-field/PDynamicField.vue';
 import { DynamicFieldProps } from '@/data-display/dynamic/dynamic-field/type';
 import { KeyItemSet } from '@/inputs/search/query-search/type';
-import { get } from 'lodash';
 import {
     QuerySearchTableDynamicLayoutProps,
 } from '@/data-display/dynamic/dynamic-layout/templates/query-search-table/type';
@@ -78,7 +75,6 @@ import { Options } from '@/data-display/tables/query-search-table/type';
 import { DataTableFieldType } from '@/data-display/tables/data-table/type';
 import { getValueByPath } from '@/data-display/dynamic/dynamic-layout/helper';
 import PToolboxTable from '@/data-display/tables/toolbox-table/PToolboxTable.vue';
-
 
 export default {
     name: 'PDynamicLayoutQuerySearchTable',
@@ -122,7 +118,7 @@ export default {
             fields: computed<DataTableFieldType[]>(() => {
                 if (!props.options.fields) return [];
 
-                return props.options.fields.map(ds => ({
+                return props.options.fields.map((ds) => ({
                     name: ds.key,
                     label: ds.name,
                     sortable: typeof ds.options?.sortable === 'boolean' ? ds.options.sortable : true,
@@ -142,7 +138,7 @@ export default {
 
                 return [{
                     title: 'Properties',
-                    items: props.options.fields.map(d => ({ label: d.name, name: d.key })),
+                    items: props.options.fields.map((d) => ({ label: d.name, name: d.key })),
                 }];
             }),
             valueHandlerMap: computed(() => (props.typeOptions?.valueHandlerMap || {})),
@@ -207,7 +203,6 @@ export default {
                 return res;
             }),
         });
-
 
         const onSelect = (selectIndex: number[]) => {
             if (!props.typeOptions?.selectIndex) state.selectIndex = selectIndex;

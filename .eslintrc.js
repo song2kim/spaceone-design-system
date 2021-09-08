@@ -48,6 +48,7 @@ module.exports = {
         }
       }
     ],
+    "no-template-key": ["off"],
     "no-this-before-super": ["off"],
     "no-useless-constructor": ["off"],
     "no-empty-function": ["error", { allow: ["constructors"] }],
@@ -89,8 +90,8 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": ["off"]
   },
   parserOptions: {
-    parser: "@typescript-eslint/parser",
-    sourceType: "module",
+    parser: '@typescript-eslint/parser',
+    sourceType: 'module',
     ecmaVersion: 2018
   },
   settings: {

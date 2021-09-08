@@ -4,12 +4,10 @@ const webpackBundleAnalyzer = require('webpack-bundle-analyzer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const postcssConfig = require('./postcss.config');
 
-
 /** ********************************************
  *     Set additional environment variables    *
  * ******************************************* */
 process.env.VUE_APP_VERSION = require('./package.json').version;
-
 
 /** ********************************************
  *        Set additional webpack plugins       *
@@ -32,7 +30,6 @@ if (process.env.VUE_APP_ANALYZE_MOD) {
         new BundleAnalyzerPlugin(),
     );
 }
-
 
 /** ********************************************
  *              Set Vue CLI config             *
@@ -71,12 +68,26 @@ module.exports = {
         },
     },
     chainWebpack: (config) => {
+        config.resolve.alias.set('vue', '@vue/compat');
+
+        config.module
+            .rule('vue')
+            .use('vue-loader')
+            .tap((options) => ({
+                ...options,
+                compilerOptions: {
+                    compatConfig: {
+                        MODE: 2,
+                    },
+                },
+            }));
+
         config.module
             .rule('images')
             .test(/\.(png|jpe?g|gif)$/i)
             .use('url-loader')
             .loader('url-loader')
-            .tap(options => Object.assign(options, { limit: false }));
+            .tap((options) => Object.assign(options, { limit: false }));
 
         /* These are some necessary steps changing the default webpack config of the Vue CLI
            that need to be changed in order for Typescript based components to generate their
